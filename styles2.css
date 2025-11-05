@@ -1,0 +1,422 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "PP Neue Montreal", sans-serif;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: 500;
+    line-height: 150px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    font-family: MF;
+}
+
+p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1;
+}
+
+section {
+    position: relative;
+    width: 100vw;
+    height: 100svh;
+    overflow: hidden;
+}
+
+.intro,
+.outro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0f0f0f;
+    color: #000000;
+    padding: 2rem;
+    text-align: center;
+}
+
+.spotlight-intro-text-wrapper {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 0.5rem;
+}
+
+.spotlight-intro-text {
+    flex: 1;
+    position: relative;
+    will-change: transform;
+    font-family: MF;
+}
+
+.spotlight-intro-text:nth-child(1) {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.spotlight-bg-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transform: scale(1);
+    z-index: 0;
+}
+
+.spotlight-bg-img img {
+    transform: scale(1);
+    will-change: transform;
+}
+
+.spotlight {
+    position: relative;
+    width: 100vw;
+    height: 100svh;
+    overflow: hidden;
+}
+
+.spotlight-titles {
+    position: absolute;
+    left: 10vw; /* 移到左側，保留一點邊距 */
+    width: 30%; /* 限制左側寬度 */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    padding-left: 0; /* 移除不必要的左邊距 */
+    z-index: 2;
+    font-family: MF;
+}
+
+.spotlight-titles h1 {
+    color: #fff;
+    opacity: 0; /* 修正為初始隱藏，由 JS 瞬間控制 */ 
+    cursor: pointer;
+    font-family: MF;
+    font-size: 2.7rem;
+}
+
+@media (hover: hover) {
+.spotlight-titles h1:hover{
+    opacity: 1 !important; /* 確保懸停時始終為 1 */
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+}
+}
+
+.spotlight-images {
+    position: absolute;
+    left: 50vw; /* 與標題對齊 */
+    width: 30%; /* 與標題寬度一致 */
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+.spotlight-img {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    will-change: transform;
+    top: -15%;
+    transform: translateY(15%)
+}
+
+.spotlight-titles-container {
+    position: absolute;
+    top: 0;
+    left: 5vw;
+    width: 30%;
+    height: 100%;
+    overflow: hidden;
+    --before-opacity: 0;
+    --after-opacity: 0;
+}
+
+.spotlight-titles-container::before,
+.spotlight-titles-container::after {
+    content: "";
+    position: absolute;
+    width: 100svh;
+    height: 1.5px; /* 🚀 優化 1: 略微變細，增加精緻感 */
+    
+    /* 🚀 優化 2: 創建白色漸變效果，模擬能量從中心向外擴散 */
+    background-image: linear-gradient(
+        to right, 
+        rgba(255, 255, 255, 0) 0%, 
+        #ffffff 50%, 
+        rgba(255, 255, 255, 0) 100%
+    );
+    
+    /* 🚀 優化 3: 添加微妙的光暈效果 */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7); 
+    
+    pointer-events: none;
+    transition: opacity 0.5s ease; /* 增加過渡時間讓淡入淡出更柔和 */
+    z-index: 10;
+}
+
+.spotlight-titles-container::before {
+    top: 0;
+    left: 0;
+    transform: rotate(-45deg) translate(-7rem);
+    opacity: var(--before-opacity);
+}
+.spotlight-titles-container::after {
+    bottom: 0;
+    right: 0;
+    transform: rotate(45deg) translate(-7rem);
+    opacity: var(--after-opacity);
+}
+
+.spotlight-header {
+    display: none;
+}
+
+/* outro / planet gallery */
+.outro {
+    padding: 3rem 6vw;
+    background: #000000;
+    text-align: center;
+    background-image: url('./img/BG.gif');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    
+    /* 修正捲動卡頓：強制硬體加速 */
+    will-change: transform, background; 
+    transform: translateZ(0); 
+}
+
+.planet-gallery {
+    margin: 0.7rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 欄 */
+    grid-auto-rows: minmax(200px, 250px); 
+    gap: 2.5rem;
+    align-items: start;
+    max-width: 1280px; 
+}
+
+/* 每個縮圖卡片 */
+.planet-thumb {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 12px;
+    overflow: hidden; 
+    background: transparent; /* 🚀 修正: 將背景設為透明 */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    transition: transform 200ms ease, box-shadow 200ms ease;
+    height: 100%;
+    font-family: MF;
+    position: relative; 
+    
+    /* 修正靜止和懸停時的白邊：強制 GPU 渲染 */
+    will-change: transform, box-shadow; 
+    transform: translateZ(0); 
+}
+
+/* 圖片區塊固定高度並裁切 (保持一致外觀) */
+.planet-thumb img {
+    width: 90%;
+    height: 185px;
+    object-fit: cover;
+    display: block;
+    background: #00000000; /* 圖片的背景仍為黑色，可以讓未載入或透明圖片有基礎色 */
+}
+
+/* 標題區塊固定 padding */
+.planet-thumb figcaption {
+    padding: 0.9rem 0.8rem;
+    font-weight: 600;
+    font-size: 0.98rem;
+    text-align: center;
+    background: transparent; /* 🚀 修正: 將 figcaption 的背景也設為透明 */
+    color: #fff; /* 修正：如果背景透明，文字顏色需要調整為可見 */
+}
+
+/* -------------------------------------- */
+/* 簡介文字覆蓋縮圖樣式 */
+/* -------------------------------------- */
+
+.planet-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    
+    transform: translateY(100%); 
+    opacity: 0;
+    visibility: hidden;
+    
+    padding: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.5); /* 黑色半透明背景 */
+    color: #fff; 
+    
+    /* 確保簡介框與圖卡有相同的圓角，防止露邊 */
+    border-radius: 12px; 
+    
+    transition: transform 300ms ease, opacity 300ms ease, visibility 0s 300ms;
+    z-index: 5; 
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* 簡介的文字樣式 */
+.planet-info p {
+    font-size: 1.1rem; 
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0;
+}
+
+
+/* hover 效果 (圖卡向上跳) - 移除縮放，保持簡潔 */
+.planet-thumb:hover,
+.planet-thumb:focus {
+    transform: translateY(-6px); /* 恢復：只保留向上跳 */
+    box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
+
+/* 當滑鼠懸停時顯示簡介 */
+.planet-thumb:hover .planet-info {
+    transform: translateY(0); 
+    opacity: 1;
+    visibility: visible;
+    transition: transform 300ms ease, opacity 300ms ease, visibility 0s 0s;
+}
+
+/* 響應式調整 */
+@media (max-width: 1000px) {
+    .planet-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: minmax(160px, 200px); 
+        gap: 0.9rem;
+        max-width: 900px;
+    }
+    .planet-thumb img { height: 160px; }
+    .planet-info { padding: 1rem; }
+}
+
+@media (max-width: 600px) {
+    .planet-gallery {
+        grid-template-columns: 1fr;
+        grid-auto-rows: minmax(150px, 200px); 
+        gap: 0.75rem;
+        max-width: 520px;
+    }
+    .planet-thumb img { height: 120px; object-position: center; }
+    .planet-info p { font-size: 1rem; }
+}
+
+@font-face {
+    font-family: 'MF'; 
+    src: url('fonts/Dune_Rise.otf') format('opentype'); 
+    font-weight: normal;
+    font-style: normal; 
+}
+
+/* -------------------------------------- */
+/* 新增：BACK TO EARTH 高級感按鈕 */
+/* -------------------------------------- */
+
+.back-to-earth-btn {
+    position: fixed;
+    bottom: 30px; /* 距離底部 */
+    right: 30px; /* 距離右側 */
+    
+    /* 預設隱藏和位移 */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px); 
+    
+    /* 平滑過渡 */
+    transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.2s ease;
+    
+    /* 設計樣式：深色、簡潔 */
+    background-color: rgba(255, 255, 255, 0.05); /* 輕微透明的背景 */
+    backdrop-filter: blur(5px); /* 高級感磨砂玻璃效果 */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* 細緻的邊框 */
+    border-radius: 50px; /* 圓角膠囊形狀 */
+    color: #fff;
+    text-decoration: none;
+    font-family: 'MF', sans-serif;
+    font-size: 0.9rem;
+    padding: 10px 8px; /* 🚀 修正: 調整 padding 以縮短按鈕 */
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000; /* 確保浮動在所有元素之上 */
+}
+
+/* 懸浮時顯示 */
+.back-to-earth-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* 懸停效果 */
+.back-to-earth-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15); /* 提升亮度 */
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px); /* 輕微抬升 */
+}
+
+/* 🚀 修正: 確保文字顯示 */
+.back-to-earth-btn .text {
+    display: inline; /* 確保文字顯示 */
+}
+
+.back-to-earth-btn .icon {
+    margin-left: 8px; /* 🚀 修正: 恢復圖標左側間距 */
+    font-size: 1.2rem;
+    line-height: 1;
+    /* 讓地球圖標輕微旋轉或呼吸 */
+    transition: transform 0.5s ease;
+}
+
+.back-to-earth-btn:hover .icon {
+    transform: rotate(360deg);
+}
+
+/* 響應式調整 */
+@media (max-width: 600px) {
+    .back-to-earth-btn {
+        bottom: 20px;
+        right: 20px;
+        font-size: 0.8rem;
+        padding: 10px 15px; /* 🚀 修正: 響應式下的 padding 也縮短 */
+    }
+    /* 針對小螢幕，如果按鈕仍太長，可以考慮縮小文字或再調整 padding */
+    .back-to-earth-btn .text {
+        font-size: 0.75rem; /* 小螢幕下文字更小一點 */
+    }
+    .back-to-earth-btn .icon {
+        font-size: 1rem;
+        margin-left: 5px;
+    }
+}

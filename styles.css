@@ -1,0 +1,272 @@
+.logo {
+    /* 可選：設置字體大小讓 emoji 更明顯 */
+    font-size: 35px; 
+
+    /* 設置過渡效果：讓所有 transform 變化在 0.5 秒內平滑完成 */
+    transition: transform 0.5s ease-in-out; 
+
+    /* 確保元素可以被鼠標點擊/懸停，並使 transform 生效 */
+    display: inline-block; 
+
+    /* 可選：讓元素可以點擊 */
+    cursor: pointer; 
+}
+.logo:hover {
+    /* 旋轉 360 度 (完整一圈) */
+    transform: rotate(720deg);
+
+    /* 如果你想旋轉更多圈，可以設置更大的角度，例如：
+    transform: rotate(720deg); 
+    */
+}
+
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* 主視覺區域 (hero) */
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 畫布背景設定 */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  
+}
+
+/* 導覽列樣式 */
+nav {
+  position: fixed;
+  inset: 0 auto auto 0;
+  height: 64px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  box-sizing: border-box;
+  z-index: 10;
+  backdrop-filter: blur(6px);
+}
+
+.nav-links,
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.nav-links a,
+.nav-buttons a {
+  text-decoration: none;
+  color: #111;
+  font-weight: 600;
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+}
+
+.btn.primary {
+  background: #111;
+}
+
+.btn.primary a {
+  color: #fff;
+}
+
+/* 主要內容 (hero-content) */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  perspective: 1000px;
+  min-height: 100vh;
+  display: flex;
+  /* 改用 flex 便於置中 */
+  flex-direction: column;
+  align-items: center;
+  /* 水平置中 */
+  justify-content: center;
+  /* 垂直置中 */
+  text-align: center;
+  transition: transform 260ms cubic-bezier(.2,.9,.3,1);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.hero-content h1,
+.hero-content p {
+  transform-style: preserve-3d;
+  margin: 0.25rem 0;
+  font-family: MF;
+  color: #fff;
+  text-shadow: 
+        /* 內層黑暈：較小的模糊，高透明度 */
+        0 0 4px rgba(0, 0, 0, 0.4), 
+        
+        /* 中層黑暈：中等模糊，中等透明度 */
+        0 0 10px rgba(0, 0, 0, 0.6), 
+        
+        /* 外層黑暈：較大的模糊，低透明度，增加深度 */
+        0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero-content h1 {
+  font-size: clamp(32px, 6vw, 72px);
+  
+}
+
+.hero-content p {
+  font-size: clamp(16px, 2.6vw, 22px);
+  opacity: 0.9;
+}
+
+/* 結尾區 (outro) */
+.footer {
+  min-height: 0.1px;
+  display: grid;
+  place-content: center;
+  padding: 4rem 1rem;
+  background: #fafafa;
+  text-align: center;
+}
+
+.btn.primary.view-planets {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 220px;
+  padding: 12px 24px;
+  background-color: rgba(255, 255, 255, 0.05); /* 輕微透明的背景 */
+    backdrop-filter: blur(5px); /* 高級感磨砂玻璃效果 */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* 細緻的邊框 */
+    border-radius: 50px; /* 圓角膠囊形狀 */
+    color: #fff;          /* 白色文字 */
+  text-decoration: none;
+  font-weight: 700;
+  margin: 1rem auto 0;
+  font-family: MF;
+
+  /* 平滑過渡 */
+  transition: transform 200ms cubic-bezier(.2,.9,.3,1), 
+              background-color 180ms ease, 
+              box-shadow 220ms ease,
+              color 180ms ease,
+              padding 180ms ease,
+              font-size 180ms ease;
+  will-change: transform, padding, font-size;
+  transform-origin: center center;
+}
+
+/* Hover / focus：更明顯放大（同時放大文字與內距） */
+.btn.primary.view-planets:hover,
+.btn.primary.view-planets:focus {
+  /* scale 與位移 */
+  transform: translateY(-5px) scale(1.02) !important;
+  /* 增加按鈕大小感受：放大字與 padding */
+  font-size: 1.06em;
+  padding: 16px 32px;
+  /* 顏色與下底線視覺 */
+  
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+  box-shadow: 0 28px 60px rgba(0,0,0,0.26);
+  font-family: 'MF', sans-serif;
+  background-color: rgba(255, 255, 255, 0.15); /* 提升亮度 */
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px); /* 輕微抬升 */
+
+}
+
+/* 點擊回饋 */
+.btn.primary.view-planets:active {
+  transform: translateY(-6px) scale(1.12) !important;
+  transition-duration: 120ms;
+}
+
+/* 行動裝置上降低效果以免影響布局 */
+@media (max-width: 600px) {
+  .btn.primary.view-planets {
+    width: calc(100% - 32px);
+    padding: 12px;
+  }
+  .btn.primary.view-planets:hover,
+  .btn.primary.view-planets:focus {
+    transform: none !important;
+    font-size: 1em;
+    padding: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  }
+}
+
+/* 固定在右上角的 Back to Top（永遠顯示） */
+.btn.back-to-top {
+  position: fixed;
+  top: 14px;
+  right: 16px;
+  z-index: 99999;
+  display: inline-flex;
+  
+  justify-content: center;
+  
+  
+  border: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  text-decoration: none;
+  font-weight: 700;
+  
+  pointer-events: auto;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  font-family: MF;
+    background-color: rgba(255, 255, 255, 0.05); /* 輕微透明的背景 */
+    backdrop-filter: blur(5px); /* 高級感磨砂玻璃效果 */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* 細緻的邊框 */
+    border-radius: 50px; /* 圓角膠囊形狀 */
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 12px 20px;
+    align-items: center;
+    cursor: pointer;
+    
+}
+
+/* Hover / focus 狀態 */
+.btn.back-to-top:hover,
+.btn.back-to-top:focus {
+  transform: translateY(-4px) scale(1.03);
+  background: #111; /* 深一點的黑 */
+  box-shadow: 0 14px 36px rgba(0,0,0,0.32);
+  color: #fff;
+}
+
+/* 行動裝置調整 */
+@media (max-width: 600px) {
+  .btn.back-to-top {
+    top: 12px;
+    right: 12px;
+    padding: 8px 12px;
+    border-radius: 16px;
+    font-size: 0.95rem;
+  }
+}
+
+@font-face {
+    font-family: 'MF'; 
+    src: url('fonts/Dune_Rise.otf') format('opentype'); 
+    font-weight: normal;
+    font-style: normal; 
+}
